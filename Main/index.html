@@ -59,7 +59,7 @@
 <body>
 <script>
   function updateAge() {
-    const birthDate = new Date(2009, 7, 11, 13, 18); // months are 0-based: 7 = August
+    const birthDate = new Date(0, 0, 0, 0, 0); // months are 0-based: 0 = Jan, 1 = Feb, etc.
     const now = new Date();
     let years = now.getFullYear() - birthDate.getFullYear();
     let months = now.getMonth() - birthDate.getMonth();
