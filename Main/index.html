@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="Stylesheet.css"/>
+<style>
+  @font-face {
+    font-family: 'MyCustomFont';  /* choose any name */
+    src: url('fonts/yourfont.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {
+    font-family: 'MyCustomFont', monospace;
+    font-size: 48px;  /* Slightly smaller font size */
+    line-height: 1.1;  /* Tighter line spacing */
+    text-align: left;
+    padding: 20px;
+    background: #000000;
+    color: #3399FF;
+    user-select: none;
+    display: inline-block;
+    position: relative;
+      color: #3399FF;
+  text-shadow:
+    0 0 10px rgba(51, 153, 255, 0.6),
+    0 0 20px rgba(51, 153, 255, 0.4);
+  }
+
+  .typing-container {
+    white-space: nowrap;  /* Prevent text from wrapping */
+    display: block;  /* Block display to use the entire width */
+  }
+
+  /* Triple the letter spacing */
+  .typing-container div {
+    letter-spacing: 12px;  /* Tripled spacing between characters */
+    margin-bottom: 6px;  /* Smaller margin between "paragraphs" */
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 18px;  /* Adjusted cursor width */
+    height: 48px;  /* Match font size height */
+    background-color: #3399FF;
+    animation: blink 1s steps(2, start) infinite;
+    vertical-align: bottom;
+    margin-left: 0px;
+  }
+
+  @keyframes blink {
+    0%, 50% { opacity: 1; }
+    50.01%, 100% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+<script>
+  function updateAge() {
+    const birthDate = new Date(2009, 7, 11, 13, 18); // months are 0-based: 7 = August
+    const now = new Date();
+    let years = now.getFullYear() - birthDate.getFullYear();
+    let months = now.getMonth() - birthDate.getMonth();
+    let days = now.getDate() - birthDate.getDate();
+    let hours = now.getHours() - birthDate.getHours();
+    let minutes = now.getMinutes() - birthDate.getMinutes();
+    let seconds = now.getSeconds() - birthDate.getSeconds();
+
+    if (seconds < 0) {
+      seconds += 60;
+      minutes--;
+    }
+    if (minutes < 0) {
+      minutes += 60;
+      hours--;
+    }
+    if (hours < 0) {
+      hours += 24;
+      days--;
+    }
+    if (days < 0) {
+      // Get days in previous month
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      days += prevMonth.getDate();
+      months--;
+    }
+    if (months < 0) {
+      months += 12;
+      years--;
+    }
+
+    // Display string (you can format as you want)
+    const ageString = 
+      `${years}y${months}m${days}d${hours}h${minutes}m${seconds}s`;
+
+    document.getElementById('clock').textContent = ageString;
+  }
+
+  setInterval(updateAge, 1000);
+  updateAge();
+</script>
+  <div class="typing-container">
+    <div style="text-decoration: none; border-top: 2px solid #3399FF; padding-top: 0.2em; display: inline-block;";>(311) 399-2364</div>
+    <div style="text-decoration: underline;">***W.O.P.R***&nbsp;</div>
+    <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <div>FALKEN'S MAZE</div>
+    <div>CHESS</div>
+    <div>TIC-TAC-TOE</div>
+    <div>FIGHTER COMBAT</div>
+    <div>AIR-TO-GROUND ACTIONS</div>
+    <div>FIGHTER COMBAT</div>
+    <div>THEATREWIDE TACTICAL WAR</div>
+    <div id="clock" style="text-align: right;"></div>
+    <div>GLOBAL THERMONUCLEAR SCENARIO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+    <span class="cursor"></span>
+  </div>
+<div id="retroClock" style="width:150px; height:150px; margin-left:auto;"></div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</div>
+<div id="retroClock"></div>
+
+<script>
+  function createRetroClock(containerId) {
+    const container = document.getElementById(containerId);
+    const size = 150;
+    const canvas = document.createElement('canvas');
+    canvas.width = size;
+    canvas.height = size;
+    container.appendChild(canvas);
+    const ctx = canvas.getContext('2d');
+    const radius = size / 2;
+    ctx.translate(radius, radius); // center
+
+    function drawClock() {
+      ctx.clearRect(-radius, -radius, size, size);
+      drawFace(ctx, radius);
+      drawTicks(ctx, radius);
+      drawHands(ctx, radius);
+    }
+
+    function drawFace(ctx, radius) {
+      // First bloom layer (blur 10px, alpha 0.6)
+      ctx.shadowColor = 'rgba(51, 153, 255, 0.6)';
+      ctx.shadowBlur = 10;
+      ctx.lineWidth = 2;
+      ctx.strokeStyle = '#3399FF';
+      ctx.beginPath();
+      ctx.arc(0, 0, radius - 2, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      // Second bloom layer (blur 20px, alpha 0.4)
+      ctx.shadowColor = 'rgba(51, 153, 255, 0.4)';
+      ctx.shadowBlur = 20;
+      ctx.beginPath();
+      ctx.arc(0, 0, radius - 2, 0, 2 * Math.PI);
+      ctx.stroke();
+
+      // Reset shadow
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0;
+    }
+
+    function drawTicks(ctx, radius) {
+      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = '#3399FF';
+
+      // Bloom for ticks (same as text shadow but lighter effect)
+      ctx.shadowColor = 'rgba(51, 153, 255, 0.4)';
+      ctx.shadowBlur = 10;
+
+      for (let i = 0; i < 60; i++) {
+        let angle = (i * Math.PI) / 30;
+        ctx.beginPath();
+        let tickLength = (i % 5 === 0) ? 10 : 5;
+        ctx.moveTo(
+          (radius - 2) * Math.cos(angle),
+          (radius - 2) * Math.sin(angle)
+        );
+        ctx.lineTo(
+          (radius - 2 - tickLength) * Math.cos(angle),
+          (radius - 2 - tickLength) * Math.sin(angle)
+        );
+        ctx.stroke();
+      }
+
+      // Reset shadow
+      ctx.shadowColor = 'transparent';
+      ctx.shadowBlur = 0;
+    }
+
+    function drawHands(ctx, radius) {
+      const now = new Date();
+      let hour = now.getHours() % 12;
+      let minute = now.getMinutes();
+      let second = now.getSeconds();
+
+      // Hour hand
+      let hourAngle = ((hour + minute / 60) * Math.PI) / 6;
+      drawHand(ctx, hourAngle, radius * 0.5, 4, '#3399FF');
+
+      // Minute hand
+      let minuteAngle = ((minute + second / 60) * Math.PI) / 30;
+      drawHand(ctx, minuteAngle, radius * 0.75, 2.5, '#3399FF');
+
+      // Second hand (thin, red, no bloom)
+      let secondAngle = (second * Math.PI) / 30;
+      drawHand(ctx, secondAngle, radius * 0.85, 1, 'red', false);
+    }
+
+    function drawHand(ctx, angle, length, width, color, bloom = true) {
+      if (bloom) {
+        // First bloom layer (blur 10px, alpha 0.6)
+        ctx.shadowColor = 'rgba(51, 153, 255, 0.6)';
+        ctx.shadowBlur = 10;
+        ctx.lineWidth = width;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.rotate(angle);
+        ctx.lineTo(0, -length);
+        ctx.stroke();
+
+        // Second bloom layer (blur 20px, alpha 0.4)
+        ctx.shadowColor = 'rgba(51, 153, 255, 0.4)';
+        ctx.shadowBlur = 20;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(0, -length);
+        ctx.stroke();
+
+        ctx.rotate(-angle);
+
+        // Reset shadow
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+      } else {
+        // No bloom, normal hand
+        ctx.shadowColor = 'transparent';
+        ctx.shadowBlur = 0;
+        ctx.lineWidth = width;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = color;
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.rotate(angle);
+        ctx.lineTo(0, -length);
+        ctx.stroke();
+        ctx.rotate(-angle);
+      }
+    }
+
+    setInterval(drawClock, 1000);
+    drawClock();
+  }
+
+  createRetroClock('retroClock');
+</script>
+
+
+
+
+</body>
+</html>

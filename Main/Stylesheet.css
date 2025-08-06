@@ -1,0 +1,35 @@
+body {
+  position: relative;
+  background: #000000;
+  color: #3399FF;
+  margin: 0;
+}
+
+body::after {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to top,
+    rgba(51, 153, 255, 0.1) 0px,
+    rgba(51, 153, 255, 0.1) 3px,
+    rgba(51, 153, 255, 0.3) 4px,
+    rgba(51, 153, 255, 0.1) 5px
+  );
+  background-size: 100% 5px;
+  pointer-events: none;
+  animation: scanlines 1s linear infinite;
+  z-index: -1;
+}
+
+/* Scanline animation */
+@keyframes scanlines {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 0 -5px; /* Match the height of the lines */
+  }
+}
