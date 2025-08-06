@@ -3,7 +3,8 @@ WarGames (1983) inspired wallpaper for 14-inch MacBooks. Requires [Plash](https:
   
 Probably possible to use it on Windows, but it's not optimised for it. Same deal with 16-inch MacBooks.  
 
-<img width="1512" height="982" alt="Screenshot 2025-08-06 at 18 36 08" src="https://github.com/user-attachments/assets/d7ff3fbf-df80-4028-b096-b85f47f8dca6" />
+<img width="1512" height="982" alt="Screenshot 2025-08-06 at 19 02 37" src="https://github.com/user-attachments/assets/4d029c92-4f64-48b7-89f5-4f1178df7ab1" />
+
 
 **Features include:**  
 - Customisable text list  
